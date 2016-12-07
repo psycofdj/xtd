@@ -144,9 +144,6 @@ class HTTPResponse(TCPResponse):
     self.m_mimetype    = "text/plain"
     self.m_encoding    = "iso-8859-1"
     self._read()
-    print(str(self.m_error))
-    print(str(self.m_statusCode))
-    print(str(self.m_data))
 
   def _read_ctype(self, p_headers):
     l_encoding = self.m_encoding
@@ -163,11 +160,6 @@ class HTTPResponse(TCPResponse):
   def _read(self):
     self.m_mimetype, self.m_encoding = self._read_ctype(self.m_headers)
     self.m_data    = self.m_rawdata.decode(self.m_encoding)
-    if self.m_mimetype == "application/json":
-      try:
-        self.m_data = json.loads(self.m_data)
-      except ValueError as l_error:
-        self.m_error = str(l_error)
 
   def has_error(self):
     return self.m_error != ""
@@ -261,6 +253,8 @@ class AsyncCurlClient:
       if self.m_request.m_data:
         l_data = self.m_request.m_data
         self.m_handle.setopt(pycurl.POSTFIELDS, l_data)
+      else:
+        self.m_handle.setopt(pycurl.CUSTOMREQUEST, "POST")
     elif self.m_request.m_method == "HEAD":
       self.m_handle.setopt(pycurl.NOBODY, 1)
     elif self.m_request.m_method == "DELETE":
@@ -288,7 +282,6 @@ class AsyncCurlClient:
     return self.m_response
 
   def read_response(self):
-    print(str("read"))
     self.m_response = HTTPResponse(self)
 
   def send(self, p_retry = 0):
@@ -364,7 +357,6 @@ class AsyncCurlMultiClient:
       l_list = [ x for x in self.m_clients if not x.response().has_error() ]
     else:
       l_list = [ x for x in self.m_clients if x.response().has_error() ]
-    print("got %d clients" % len(l_list))
     return l_list
 
   def send(self, p_retry = 0):
