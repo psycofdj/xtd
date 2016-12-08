@@ -30,6 +30,8 @@ def unparse_unix(p_parsed, p_unix):
   if p_unix:
     p_parsed[0] = "%s+unix" % p_parsed[0]
     p_parsed[1] = urllib.parse.quote_plus(p_unix)
+  else:
+    p_parsed[0] = "http"
   return urllib.parse.urlunparse(p_parsed)
 
 

@@ -22,7 +22,7 @@ def log_request_response(p_withResponse):
   def print_part(p_part):
     return {
       "name"    : enc(p_part.name),
-      "headers" : {enc(x): enc(y) for x, y in p_part.headers.items()},
+      "headers" : { enc(x):enc(y) for x,y in p_part.headers.items() },
       "value"   : enc(p_part.fullvalue())
     }
 
@@ -34,7 +34,7 @@ def log_request_response(p_withResponse):
       "name"    : enc(l_remote.name),
       "ip"      : enc(l_remote.ip),
       "line"    : enc(l_request.request_line),
-      "headers" : {enc(x): enc(y) for x, y in l_request.headers.items()},
+      "headers" : { enc(x):enc(y) for x,y in l_request.headers.items() },
       "body"    : {}
     }
   }
@@ -42,31 +42,38 @@ def log_request_response(p_withResponse):
   # Request parameters from URL query string and
   # x-www-form-urlencoded POST data
   if l_request.body.params:
-    l_params = l_data["request"]["body"]["params"] = {}
+    l_body = l_data["request"]["body"]
+    l_body["params"] = {}
     for c_name, c_value in l_request.body.params.items():
-      l_param = l_params.setdefault(enc(c_name), {})
+      if not c_name in l_body["params"]:
+        l_body["params"][enc(c_name)] = {}
       if isinstance(c_value, list):
         for c_pos, c_item in enumerate(c_value):
+          if not c_pos in l_body["params"][enc(c_name)]:
+            l_body["params"][enc(c_name)][c_pos] = {}
           # pylint: disable=protected-access
           if isinstance(c_item, cherrypy._cpreqbody.Part):
-            l_param[c_pos] = print_part(c_item)
+            l_body["params"][enc(c_name)][c_pos] = print_part(c_item)
           else:
-            l_param[c_pos] = {"value" : enc(c_item)}
+            l_body["params"][enc(c_name)][c_pos] = {
+              "value" : enc(c_item)
+            }
       else:
-        l_param = enc(c_value)
+        l_body["params"][enc(c_name)] = enc(c_value)
 
   if not p_withResponse:
     return l_data
 
   # If the body is multipart format each of the parts
   if l_request.body.parts:
-    l_data["request"]["body"]["parts"] = \
-      {c_pos: print_part(c_part)
-       for c_pos, c_part in enumerate(l_request.body.parts)}
+    l_body = l_data["request"]["body"]
+    l_body["parts"] = {}
+    for c_pos, c_part in enumerate(l_request.body.parts):
+      l_body["parts"][c_pos] = print_part(c_part)
 
   l_headers = {}
   if cherrypy.response.header_list:
-    l_headers = {enc(x): enc(y) for x, y in cherrypy.response.header_list}
+    l_headers = { enc(x):enc(y) for x,y in cherrypy.response.header_list }
   l_data["response"] = {
     "status"  : enc(cherrypy.response.status),
     "headers" : l_headers,
@@ -76,8 +83,11 @@ def log_request_response(p_withResponse):
   }
 
   if not cherrypy.response.stream:
-    for c_chunk in cherrypy.response.body:
-      l_data["response"]["body"]["chunks"].append(enc(c_chunk))
+    try:
+      for c_chunk in cherrypy.response.body:
+        l_data["response"]["body"]["chunks"].append(enc(c_chunk))
+    except:
+      l_data["response"]["body"]["chunks"] = []
   return l_data
 
 def request_logger():
