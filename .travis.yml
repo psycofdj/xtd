@@ -12,6 +12,10 @@ install:
   - pip install -r requirements.dev.txt
 
 script:
+  - which python
+  - which python3
+  - ls -ls $(which python)
+  - ls -ls $(which python3)
   - ./devtools/statuses.py --commit=${TRAVIS_COMMIT} --build-id=${TRAVIS_BUILD_ID} --token=${token} --pull-id=${TRAVIS_PULL_REQUEST}
   - ./devtools/coverage.sh
   - dpkg-buildpackage -uc -us
