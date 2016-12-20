@@ -8,7 +8,7 @@ install:
 
 script:
   - export PATH=/usr/bin:${PATH}
-  - sudo -H pip3 install -r requirements.dev.txt upgrade
+  - sudo -H pip3 install -r requirements.dev.txt --upgrade
   - ./devtools/statuses.py --commit=${TRAVIS_COMMIT} --build-id=${TRAVIS_BUILD_ID} --token=${token} --pull-id=${TRAVIS_PULL_REQUEST}
   - ./devtools/coverage.sh
   - dpkg-buildpackage -uc -us
