@@ -292,11 +292,11 @@ class StatusHelper:
       "commit" : self.m_commit,
       "results" : self.m_comment
     })
-    if self.m_prid != "false" :
-      self.comment_pr("Automatic build report for commit %(commit)s:\n\n%(results)s" % {
-        "commit" : self.m_commit,
-        "results" : self.m_comment
-      })
+    # if self.m_prid != "false" :
+    #   self.comment_pr("Automatic build report for commit %(commit)s:\n\n%(results)s" % {
+    #     "commit" : self.m_commit,
+    #     "results" : self.m_comment
+    #   })
 
 if __name__ == "__main__":
   l_app = StatusHelper()

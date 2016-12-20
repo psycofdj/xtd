@@ -1,20 +1,17 @@
-
-language: python
 dist: trusty
 cache:
-  - pip
   - apt
-
-python:
-  - '3.4'
+  - pip
 
 install:
-  - sudo apt-get install graphviz
-  - pip install -r requirements.dev.txt
+  - sudo apt-get install graphviz debhelper python3-all python3-setuptools python3-pip python3-requests python3-cherrypy3 python3-termcolor
 
 script:
-  - "./devtools/statuses.py --commit=${TRAVIS_COMMIT} --build-id=${TRAVIS_BUILD_ID} --token=${token} --pull-id=${TRAVIS_PULL_REQUEST}"
-  - "./devtools/coverage.sh"
+  - export PATH=/usr/bin:${PATH}
+  - sudo -H pip3 install -r requirements.dev.txt --upgrade
+  - ./devtools/statuses.py --commit=${TRAVIS_COMMIT} --build-id=${TRAVIS_BUILD_ID} --token=${token} --pull-id=${TRAVIS_PULL_REQUEST}
+  - ./devtools/coverage.sh
+  - dpkg-buildpackage -uc -us
 
 after_success:
   - coveralls
