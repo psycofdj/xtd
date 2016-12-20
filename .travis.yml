@@ -5,7 +5,10 @@ cache:
   - apt
 
 python:
-  - 3.5_with_system_site_packages
+  - 3.5
+
+virtualenv:
+    system_site_packages: true
 
 install:
   - sudo apt-get install graphviz debhelper python3-all python3-setuptools python3-cherrypy3 python3-termcolor
