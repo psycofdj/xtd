@@ -4,10 +4,11 @@ cache:
   - pip
 
 install:
-  - sudo apt-get install graphviz debhelper python3-all python3-setuptools python3-cherrypy3 python3-termcolor python3-pip python3-requests python3-pycurl pylint3 python3-sphinx python3-sphinx-rtd-theme
+  - sudo apt-get install graphviz debhelper python3-all python3-setuptools python3-cherrypy3 python3-termcolor python3-pip python3-requests python3-pycurl
 
 script:
   - export PATH=/usr/bin:${PATH}
+  - sudo -H pip3 install pylint coveralls sphinx sphinx_rtd_theme
   - ./devtools/statuses.py --commit=${TRAVIS_COMMIT} --build-id=${TRAVIS_BUILD_ID} --token=${token} --pull-id=${TRAVIS_PULL_REQUEST}
   - ./devtools/coverage.sh
   - dpkg-buildpackage -uc -us
