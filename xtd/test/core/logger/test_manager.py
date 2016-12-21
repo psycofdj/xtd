@@ -491,5 +491,39 @@ class LogManagerTest(unittest.TestCase):
       logger.critical(__name__, "test")
       self.assertEqual(len(l_logs.records), 4)
 
+  def test_dupped_record(self):
+    l_override = {
+      "loggers" : {
+        "root" : {
+          "handlers" : [  ],
+          "level" : 30
+        },
+        "test" : {
+          "handlers" : [ "h2", "h1" ],
+          "level" : 30
+        }
+      },
+      "handlers" : {
+        "h2" : {
+          "class" : "logging.handlers.MemoryHandler",
+          "capacity" : 30,
+          "filters" : [ "colored" ]
+        },
+        "h1" : {
+          "class" : "logging.handlers.MemoryHandler",
+          "capacity" : 30,
+          "filters" : [ ]
+        }
+      }
+    }
+    self.m_obj.initialize({}, l_override)
+    logger.error("test", "msg")
+    l_h1 = self.m_obj.get_handler("h1")   
+    l_h2 = self.m_obj.get_handler("h2")   
+    self.assertEqual(len(l_h1.buffer), 1)
+    self.assertEqual(len(l_h2.buffer), 1)
+    self.assertEqual(l_h2.buffer[0].name, "\x1b[1m\x1b[31mtest\x1b[0m")
+    self.assertEqual(l_h1.buffer[0].name, "test")
+
 if __name__ == "__main__":
   unittest.main()

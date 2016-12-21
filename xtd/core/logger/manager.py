@@ -6,6 +6,7 @@ __author__    = "Xavier MARCELET <xavier@marcelet.com>"
 
 #------------------------------------------------------------------#
 
+import copy
 import inspect
 import sys
 import logging
@@ -119,6 +120,13 @@ class WrapperLogger(logging.Logger):
       return self.__sys_version((l_sourceFrame[1], l_sourceFrame[2], l_sourceFrame[3]))
     return logging.Logger.findCaller(self, p_stack)
 
+  def handle(self, p_record):
+    if len(self.handlers) < 2:
+      super().handle(p_record)
+    else:
+      for c_handler in self.handlers:
+        l_rec = copy.deepcopy(p_record)
+        c_handler.handle(l_rec)
 
 #------------------------------------------------------------------#
 
@@ -193,6 +201,8 @@ class LogManager(metaclass=mixin.Singleton):
 
     try:
       l_result = dict(mergedicts.mergedicts(l_config, p_override))
+      # import json
+      # print(json.dumps(l_result, indent=2))
       self.m_config = l_result
     except Exception as l_error:
       l_format  = "unable to override logging configuration '%s' : %s"

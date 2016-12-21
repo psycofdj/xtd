@@ -5,7 +5,7 @@
         "myfile": {
           "class": "logging.handlers.RotatingFileHandler",
           "backupCount": 3,
-          "filename": "promise.log",
+          "filename": "myapp.log",
           "formatter": "default",
           "maxBytes": 15728640,
           "filters": [],
@@ -15,7 +15,11 @@
       "loggers" : {
         "root" : {
           "level" : 10,
-          "handlers" : [ "myfile" ]
+          "handlers" : [ "stdout" ]
+        },
+        "test" : {
+          "level" : 10,
+          "handlers" : [ "stdout", "myfile" ]
         },
         "requests.packages.urllib3.connectionpool" : { "level" : 40 }
       },
