@@ -246,7 +246,7 @@ Statistics
 """
 
 __description__  = "High level library to quickly build strong python apps"
-__version__      = "0.5.6"
+__version__      = "0.5.7"
 __author__       = "Xavier MARCELET <xavier@marcelet.com>"
 __url__          = "https://github.com/psycofdj/xtdpy"
 __download_url__ = "https://github.com/psycofdj/xtdpy/tarball/%s" % __version__
