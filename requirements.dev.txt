@@ -6,3 +6,4 @@ coveralls
 pylint
 sphinx
 sphinx_rtd_theme
+requests
