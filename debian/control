@@ -1,4 +1,4 @@
-Source: python-xtd
+Source: xtdpy
 Section: utils
 Priority: optional
 Maintainer: Xavier MARCELET <xavier@marcelet.com>
