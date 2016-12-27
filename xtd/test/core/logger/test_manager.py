@@ -6,7 +6,7 @@ __author__    = "Xavier MARCELET <xavier@marcelet.com>"
 #------------------------------------------------------------------#
 
 import logging
-import unittest
+import unittest2 as unittest
 
 from xtd.core        import logger
 from xtd.core.logger import manager
@@ -23,7 +23,7 @@ class Rec(object):
 
 class LogManagerTest(unittest.TestCase):
   def __init__(self, *p_args, **p_kwds):
-    super().__init__(*p_args, **p_kwds)
+    super(LogManagerTest, self).__init__(*p_args, **p_kwds)
 
   def setUp(self):
     mixin.Singleton.reset(manager.LogManager)

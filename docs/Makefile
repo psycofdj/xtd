@@ -57,8 +57,7 @@ clean:
 .PHONY: api
 api: xtd.rst
 xtd.rst: $(INPUT_SRC)
-	@sphinx-apidoc -d 999 -e -M -f -o . ../xtd/ ../xtd/test/
-	@rm -f modules.rst
+	@sphinx-apidoc -T -d 999 -e -M -f -o . ../xtd/ ../xtd/test/
 
 .PHONY: html
 html: api

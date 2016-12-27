@@ -11,7 +11,7 @@ import logging
 import tempfile
 import shutil
 import os
-import unittest
+import unittest2 as unittest
 
 from xtd.core              import mixin
 from xtd.core.error        import XtdError
@@ -23,7 +23,7 @@ from xtd.core.stat.counter import Int32
 
 class BaseHandlerTest(unittest.TestCase):
   def __init__(self, *p_args, **p_kwds):
-    super().__init__(*p_args, **p_kwds)
+    super(BaseHandlerTest, self).__init__(*p_args, **p_kwds)
 
   def setUp(self):
     mixin.Singleton.reset(StatManager)

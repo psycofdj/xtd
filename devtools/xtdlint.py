@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- mode:python -*-
 # -*- coding:utf-8 -*-
 #------------------------------------------------------------------#
@@ -108,7 +108,7 @@ class JsonReporter(BaseReporter):
 
 class XtdLint(PyLinter):
   def __init__(self, *p_args, **p_kwds):
-    super().__init__(*p_args, **p_kwds)
+    super(XtdLint, self).__init__(*p_args, **p_kwds)
     self.set_reporter(JsonReporter(self))
 
 if __name__ == "__main__":

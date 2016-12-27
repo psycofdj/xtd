@@ -6,7 +6,7 @@ __author__    = "Xavier MARCELET <xavier@marcelet.com>"
 #------------------------------------------------------------------#
 
 import optparse
-import unittest
+import unittest2 as unittest
 
 from xtd.core.config import manager
 from xtd.core        import error
@@ -17,7 +17,7 @@ from xtd.core        import mixin, config
 
 class ConfigManagerTest(unittest.TestCase):
   def __init__(self, *p_args, **p_kwds):
-    super().__init__(*p_args, **p_kwds)
+    super(ConfigManagerTest, self).__init__(*p_args, **p_kwds)
     self.m_obj = None
 
   def setUp(self):

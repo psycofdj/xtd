@@ -223,7 +223,7 @@ Example:
 .. code-block:: bash
 
   $ # activate log-level 10 (debug) for module "a.b.c"
-  $ python3 myapp.py --log-override='{"handler" : {"a.b.c" : { "level" : 10 } } }'
+  $ python myapp.py --log-override='{"handler" : {"a.b.c" : { "level" : 10 } } }'
 
 
 Demo
@@ -245,8 +245,10 @@ Statistics
 
 """
 
+__project__      = "xtd"
 __description__  = "High level library to quickly build strong python apps"
 __version__      = "0.5.7"
+__copyright__    = "GPL 3"
 __author__       = "Xavier MARCELET <xavier@marcelet.com>"
 __url__          = "https://github.com/psycofdj/xtdpy"
 __download_url__ = "https://github.com/psycofdj/xtdpy/tarball/%s" % __version__

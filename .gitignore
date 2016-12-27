@@ -71,3 +71,4 @@ debian/debhelper-build-stamp
 debian/files
 debian/python-xtd.substvars
 debian/python-xtd/
+debian/python3-xtd*

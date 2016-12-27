@@ -11,7 +11,7 @@ from xtd.core.param.manager import ParamManager
 
 #------------------------------------------------------------------#
 
-class ParamPage:
+class ParamPage(object):
   def __init__(self, p_credentials = None):
     self.m_credentials = p_credentials
 

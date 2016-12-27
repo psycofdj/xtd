@@ -11,12 +11,12 @@ import inspect
 import sys
 import logging
 import importlib
+from future.utils import with_metaclass
 
-
-from .       import tools
-from ..tools import mergedicts
-from ..      import mixin
-from ..error import XtdError
+from .            import tools
+from ..tools      import mergedicts
+from ..           import mixin
+from ..error      import XtdError
 
 #------------------------------------------------------------------#
 
@@ -100,7 +100,7 @@ DEFAULT_CONFIG = {
 
 class WrapperLogger(logging.Logger):
   def __init__(self, p_name):
-    super().__init__(p_name)
+    super(WrapperLogger, self).__init__(p_name)
 
   @staticmethod
   def __sys_version(p_result):
@@ -118,11 +118,15 @@ class WrapperLogger(logging.Logger):
         l_sourceFrame = l_outFrames[c_pos + 2]
     if l_sourceFrame:
       return self.__sys_version((l_sourceFrame[1], l_sourceFrame[2], l_sourceFrame[3]))
-    return logging.Logger.findCaller(self, p_stack)
+    l_args = []
+    if sys.version_info[0] >= 3:
+      l_args.append(p_stack)
+    #pylint: disable=arguments-differ
+    return super(WrapperLogger, self).findCaller(*l_args)
 
   def handle(self, p_record):
     if len(self.handlers) < 2:
-      super().handle(p_record)
+      super(WrapperLogger, self).handle(p_record)
     else:
       for c_handler in self.handlers:
         l_rec = copy.deepcopy(p_record)
@@ -130,9 +134,8 @@ class WrapperLogger(logging.Logger):
 
 #------------------------------------------------------------------#
 
-class LogManager(metaclass=mixin.Singleton):
+class LogManager(with_metaclass(mixin.Singleton, object)):
   """
-
   .. todo:: some
   """
   def __init__(self):
@@ -228,7 +231,7 @@ class LogManager(metaclass=mixin.Singleton):
   def _load_formatters(self):
     l_handlers       = self.m_config.get("handlers",   {})
     l_formatters     = self.m_config.get("formatters", {})
-    l_usedFormatters = set([ y.get("formatter", "default") for x,y in l_handlers.items() ])
+    l_usedFormatters = set([ y.get("formatter", "default") for y in l_handlers.values() ])
     l_formatters     = { x:y for x,y in l_formatters.items() if x in l_usedFormatters }
     for c_name, c_conf in l_formatters.items():
       l_class  = self._get_class(c_name, c_conf)

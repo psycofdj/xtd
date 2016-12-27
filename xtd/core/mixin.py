@@ -18,4 +18,3 @@ class Singleton(type):
       del mcs.ms_instances[p_item]
 
 #------------------------------------------------------------------#
-

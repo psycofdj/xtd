@@ -11,7 +11,7 @@ from xtd.core.stat.manager import StatManager
 
 #------------------------------------------------------------------#
 
-class CounterPage:
+class CounterPage(object):
   @cherrypy.expose
   @cherrypy.tools.json_out()
   #pylint: disable=unused-argument,no-self-use

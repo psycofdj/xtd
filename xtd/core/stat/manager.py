@@ -6,19 +6,20 @@ __author__    = "Xavier MARCELET <xavier@marcelet.com>"
 
 #------------------------------------------------------------------#
 
-from ..error  import XtdError
-from ..       import mixin
-from ..tools  import thread
-from ..       import error
-from .counter import BaseCounter
-
+from future.utils import with_metaclass
+from ..error      import XtdError
+from ..           import mixin
+from ..tools      import thread
+from ..           import error
+from .counter     import BaseCounter
+from .handler     import BaseHandler
+    
 #------------------------------------------------------------------#
 
-class StatManager(thread.SafeThreadGroup, metaclass=mixin.Singleton):
+class StatManager(with_metaclass(mixin.Singleton, thread.SafeThreadGroup)):
   def __init__(self):
-    super().__init__(__name__)
+    super(StatManager, self).__init__(__name__)
     self.m_counters  = {}
-
 
   def exists(self, p_ns, p_name):
     l_list     = self.m_counters.get(p_ns, [])
@@ -57,7 +58,6 @@ class StatManager(thread.SafeThreadGroup, metaclass=mixin.Singleton):
     Raises:
      XtdError: given ``p_handler`` is not a valid :py:class:`~xtd.core.stat.handler.BaseHandler`
     """
-    from .handler import BaseHandler
     if not issubclass(p_handler.__class__, BaseHandler):
       raise error.XtdError(__name__, "handlers must be BaseHandler based class")
     self.add_thread(p_handler)
@@ -131,10 +131,10 @@ class StatManager(thread.SafeThreadGroup, metaclass=mixin.Singleton):
       l_res[c_ns] = {}
       for c_counter in c_counters:
         c_counter.update()
-        def visitor(p_name, p_value):
+        def functor(p_name, p_value):
           # pylint: disable=cell-var-from-loop
           l_res[c_ns][p_name] = p_value
-        c_counter.visit(visitor)
+        c_counter.visit(functor)
     return l_res
 
 #------------------------------------------------------------------#

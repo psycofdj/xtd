@@ -86,7 +86,7 @@ def log_request_response(p_withResponse):
     try:
       for c_chunk in cherrypy.response.body:
         l_data["response"]["body"]["chunks"].append(enc(c_chunk))
-    except:
+    except BaseException:
       l_data["response"]["body"]["chunks"] = []
   return l_data
 
@@ -133,7 +133,7 @@ def perf_end():
 
 class JsonHTTPError(cherrypy.HTTPError):
   def __init__(self, p_status, p_message):
-    super().__init__(p_status, p_message)
+    super(JsonHTTPError, self).__init__(p_status, p_message)
     self.m_message = p_message
 
   def set_response(self):
@@ -143,4 +143,3 @@ class JsonHTTPError(cherrypy.HTTPError):
       "status"  : "%d - %s" % (self.code, self.reason),
       "message" : self.m_message
     }).encode("utf-8")
-

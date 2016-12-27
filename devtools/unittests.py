@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- mode:python -*-
 # -*- coding:utf-8 -*-
 #------------------------------------------------------------------#
@@ -8,7 +8,7 @@ __author__    = "Xavier MARCELET <xavier@marcelet.com>"
 #------------------------------------------------------------------#
 
 import inspect
-import unittest
+import unittest2 as unittest
 import importlib
 import os
 import sys
@@ -29,10 +29,10 @@ class JsonTestRunner(unittest.TextTestRunner):
   def __init__(self, *p_args, **p_kwds):
     self.m_origStream = p_kwds.get("stream", sys.stdout)
     p_kwds["stream"] = open("/dev/null", "w")
-    super().__init__(*p_args, **p_kwds)
+    super(JsonTestRunner, self).__init__(*p_args, **p_kwds)
 
   def _makeResult(self):
-    l_res = super()._makeResult()
+    l_res = super(JsonTestRunner, self)._makeResult()
     return l_res
 
   @staticmethod
@@ -61,7 +61,7 @@ class JsonTestRunner(unittest.TextTestRunner):
         else:
           l_allTests.append(c_item)
 
-    l_res  = super().run(p_test)
+    l_res  = super(JsonTestRunner, self).run(p_test)
     l_data = {
       "tests" : l_res.testsRun,
       "success" : l_res.testsRun - len(l_res.errors) - len(l_res.failures),
@@ -93,21 +93,22 @@ class JsonTestRunner(unittest.TextTestRunner):
 
 class XtdTestProgram(unittest.TestProgram):
   def __init__(self, *p_args, **p_kwds):
-    super().__init__(*p_args, **p_kwds)
+    self.format = None
+    super(XtdTestProgram, self).__init__(*p_args, **p_kwds)
 
   def _getParentArgParser(self):
-    l_parser = super()._getParentArgParser()
+    l_parser = super(XtdTestProgram, self)._getParentArgParser()
     l_parser.add_argument('--format', dest='format', action='store', help='Set output format : text or json')
     return l_parser
 
   def runTests(self):
     if self.format == "json":
       self.testRunner = JsonTestRunner
-    l_parser = super().runTests()
+    l_parser = super(XtdTestProgram, self).runTests()
 
 class XtdTestLoader(unittest.TestLoader):
   def __init__(self):
-    super().__init__()
+    super(XtdTestLoader, self).__init__()
     self.m_data = []
     self._loadTests()
 

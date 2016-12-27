@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: utf-8
 #------------------------------------------------------------------#
 
@@ -12,12 +12,13 @@ sys.path.insert(0, ".")
 import xtd
 
 setup(
-  name         = 'xtd',
+  name     = 'xtd',
   packages = ['xtd',                 'xtd.core',        'xtd.network',
               'xtd.core.param',      'xtd.core.stat',   'xtd.core.tools',
               'xtd.core.logger',     'xtd.core.config', 'xtd.network.client',
               'xtd.network.server'],
-  install_requires = ["cherrypy", "termcolor", "pycurl", "requests"],
+  install_requires = ["cherrypy", "termcolor", "pycurl", "requests", "future"],
+  test_suite   = 'xtd.test',
   version      = xtd.__version__,
   description  = xtd.__description__,
   author       = xtd.__author__.split("<")[0].strip(),

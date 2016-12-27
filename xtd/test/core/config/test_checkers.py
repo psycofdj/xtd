@@ -5,7 +5,7 @@ __author__    = "Xavier MARCELET <xavier@marcelet.com>"
 
 #------------------------------------------------------------------#
 
-import unittest
+import unittest2 as unittest
 
 from xtd.core.config import checkers
 from xtd.core        import error
@@ -14,7 +14,7 @@ from xtd.core        import error
 
 class CheckersTest(unittest.TestCase):
   def __init__(self, *p_args, **p_kwds):
-    super().__init__(*p_args, **p_kwds)
+    super(CheckersTest, self).__init__(*p_args, **p_kwds)
 
   def test_check_file(self):
     checkers.check_file("section", "name", "/dev/null", p_read=True)

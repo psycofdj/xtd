@@ -7,7 +7,7 @@ __author__    = "Xavier MARCELET <xavier@marcelet.com>"
 
 import logging
 
-from .      import filter, formatter, manager
+from .      import formatter, manager
 from .tools import get, debug, info, warning, error, critical, exception, log
 
 #------------------------------------------------------------------#

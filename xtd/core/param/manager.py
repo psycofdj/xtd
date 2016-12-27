@@ -11,6 +11,7 @@ __author__    = "Xavier MARCELET <xavier@marcelet.com>"
 
 import json
 import os
+from future.utils    import with_metaclass
 
 from .. import mixin
 from .. import logger
@@ -18,7 +19,7 @@ from .. import error
 
 #------------------------------------------------------------------#
 
-class Param:
+class Param(object):
   """Object that holds an JSON-serializable value
 
   Args:
@@ -89,10 +90,9 @@ class Param:
     self.m_value = p_value
     return True
 
-class ParamManager(metaclass=mixin.Singleton):
+class ParamManager(with_metaclass(mixin.Singleton, object)):
   """Stores in memory global parameters
   """
-
   def __init__(self, p_adminDir):
     """Constructor
 

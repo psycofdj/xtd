@@ -6,7 +6,7 @@ __author__    = "Xavier MARCELET <xavier@marcelet.com>"
 #------------------------------------------------------------------#
 
 import optparse
-import unittest
+import unittest2 as unittest
 from xtd.core.config import formatter
 
 #------------------------------------------------------------------#
@@ -14,7 +14,7 @@ from xtd.core.config import formatter
 
 class FormatterTest(unittest.TestCase):
   def __init__(self, *p_args, **p_kwds):
-    super().__init__(*p_args, **p_kwds)
+    super(FormatterTest, self).__init__(*p_args, **p_kwds)
 
   def test_basic(self):
     """

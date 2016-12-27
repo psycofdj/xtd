@@ -1,5 +1,5 @@
 cherrypy
 termcolor
 pycurl
-coveralls
 requests
+future

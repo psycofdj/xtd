@@ -29,7 +29,7 @@ function get_source_dirs
 function gen_cov
 {
   rm -f .coverage
-  coverage3 run --source "$(get_source_dirs)" --omit "xtd/test/*" --branch ./devtools/unittests.py
+  coverage run --source "$(get_source_dirs)" --omit "xtd/test/*" --branch ./devtools/unittests.py
 }
 
 

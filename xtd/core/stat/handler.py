@@ -10,7 +10,6 @@ import abc
 import os
 import requests
 
-from .manager       import StatManager
 from ..tools.thread import SafeThread
 from ..error        import XtdError
 from ..             import logger
@@ -40,7 +39,7 @@ class BaseHandler(SafeThread):
     p_fetcher (function) : functor that retrieves data counters
   """
   def __init__(self, p_name, p_interval = 50, p_fetcher = None):
-    super().__init__(p_name, p_interval)
+    super(BaseHandler, self).__init__(p_name, p_interval)
 
     self.m_fetcher = p_fetcher
     if p_fetcher is None:
@@ -48,6 +47,7 @@ class BaseHandler(SafeThread):
 
   @staticmethod
   def _fetch():
+    from .manager import StatManager
     return StatManager().get_all()
 
   @abc.abstractmethod
@@ -92,7 +92,7 @@ class DiskHandler(BaseHandler):
     XtdError: ``p_directory`` isn't writable or could ne be created
   """
   def __init__(self, p_directory, p_interval = 50, p_fetcher = None):
-    super().__init__(__name__ + "." + self.__class__.__name__, p_interval, p_fetcher)
+    super(DiskHandler, self).__init__(__name__ + "." + self.__class__.__name__, p_interval, p_fetcher)
     self.m_dir = p_directory
     self._create_dir(self.m_dir)
 
@@ -172,7 +172,7 @@ class HttpHandler(BaseHandler):
     p_fetcher (function) : functor that retrieves data counters
   """
   def __init__(self, p_url, p_interval = 50, p_fetcher = None):
-    super().__init__(__name__ + "." + self.__class__.__name__, p_interval, p_fetcher)
+    super(HttpHandler, self).__init__(__name__ + "." + self.__class__.__name__, p_interval, p_fetcher)
     self.m_url = p_url
 
   def _send_request(self, p_json):
@@ -218,7 +218,7 @@ class LoggingHandler(BaseHandler):
     p_fetcher (function) : functor that retrieves data counters
   """
   def __init__(self, p_name, p_interval = 50, p_fetcher = None):
-    super().__init__(__name__ + "." + self.__class__.__name__, p_interval, p_fetcher)
+    super(LoggingHandler, self).__init__(__name__ + "." + self.__class__.__name__, p_interval, p_fetcher)
     self.m_loggerName = p_name
 
   def write(self, p_counters):

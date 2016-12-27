@@ -10,6 +10,7 @@ import re
 import json
 import optparse
 import sys
+from future.utils    import with_metaclass
 
 from .formatter        import IndentedHelpFormatterWithNL
 from ..error           import ConfigValueError, ConfigError
@@ -17,7 +18,7 @@ from ..                import mixin
 
 #------------------------------------------------------------------#
 
-class Option:
+class Option(object):
   """ Option object for :py:class:`ConfigManager`
 
   Available option properties:
@@ -110,7 +111,7 @@ class Option:
       p_value = c_check(self.m_section, self.m_name, p_value)
     return p_value
 
-class ConfigManager(metaclass=mixin.Singleton):
+class ConfigManager(with_metaclass(mixin.Singleton, object)):
   """Unified command-line & file config option manager
 
   The main user methods are :
@@ -125,6 +126,7 @@ class ConfigManager(metaclass=mixin.Singleton):
   Attributes:
     __metaclass__ (:py:class:`xtd.core.mixin.Singleton`) : makes this object a singleton
   """
+
   def __init__(self):
     self.m_data      = {}
     self.m_options   = []

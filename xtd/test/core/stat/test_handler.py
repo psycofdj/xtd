@@ -11,7 +11,7 @@ import logging
 import tempfile
 import shutil
 import os
-import unittest
+import unittest2 as unittest
 
 from httmock import urlmatch, HTTMock
 
@@ -25,7 +25,7 @@ from xtd.core.error import XtdError
 
 class BaseHandlerTest(unittest.TestCase):
   def __init__(self, *p_args, **p_kwds):
-    super().__init__(*p_args, **p_kwds)
+    super(BaseHandlerTest, self).__init__(*p_args, **p_kwds)
 
   def test_write(self):
     l_val = BaseHandler("toto")
@@ -40,7 +40,7 @@ class BaseHandlerTest(unittest.TestCase):
 
 class DiskHandlerTest(unittest.TestCase):
   def __init__(self, *p_args, **p_kwds):
-    super().__init__(*p_args, **p_kwds)
+    super(DiskHandlerTest, self).__init__(*p_args, **p_kwds)
 
   def test__create_dir(self):
     l_dir      = tempfile.mkdtemp()
@@ -104,7 +104,7 @@ class DiskHandlerTest(unittest.TestCase):
 
 class HttpHandlerTest(unittest.TestCase):
   def __init__(self, *p_args, **p_kwds):
-    super().__init__(*p_args, **p_kwds)
+    super(HttpHandlerTest, self).__init__(*p_args, **p_kwds)
 
   @urlmatch(netloc="localhost")
   def _handle_req(self, p_url, p_request):
@@ -150,7 +150,7 @@ class HttpHandlerTest(unittest.TestCase):
 
 class LoggingHandlerTest(unittest.TestCase):
   def __init__(self, *p_args, **p_kwds):
-    super().__init__(*p_args, **p_kwds)
+    super(LoggingHandlerTest, self).__init__(*p_args, **p_kwds)
 
   @urlmatch(netloc="localhost")
   def _handle_req(self, p_url, p_request):

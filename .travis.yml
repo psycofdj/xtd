@@ -8,10 +8,11 @@ install:
 
 script:
   - export PATH=/usr/bin:${PATH}
-  - sudo -H pip3 install -r requirements.dev.txt --upgrade
+  - sudo -H pip3 install -e .
   - ./devtools/statuses.py --commit=${TRAVIS_COMMIT} --build-id=${TRAVIS_BUILD_ID} --token=${token} --pull-id=${TRAVIS_PULL_REQUEST}
   - ./devtools/coverage.sh
   - dpkg-buildpackage -uc -us
+  - lintian ../python3-xtd_*_all.deb
 
 after_success:
   - coveralls

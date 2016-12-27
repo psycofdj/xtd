@@ -6,24 +6,29 @@ __version__   = "0.3"
 
 #------------------------------------------------------------------#
 
-import urllib
+
+try:
+  from urlparse import urlparse
+except ImportError:
+  from urllib.parse import urlparse
+
 import re
 import logging
 import cherrypy
 
 from xtd.core                  import logger
 from xtd.core.tools.mergedicts import mergedicts
-from .                         import tools
 from xtd.core.error            import XtdError
+from .                         import tools
 
 #------------------------------------------------------------------#
 
-class ServerManager:
+class ServerManager(object):
   ms_initialized = False
 
   class LoggerFilter(logging.Filter):
     def __init__(self, p_name="", p_wrap=False):
-      super().__init__(p_name)
+      super(ServerManager.LoggerFilter, self).__init__(p_name)
       self.m_wrap = p_wrap
 
     def filter(self, p_record):
@@ -50,7 +55,7 @@ class ServerManager:
       raise XtdError(__name__, "you must initialize server manager first")
 
     l_server = cherrypy._cpserver.Server()
-    p_socket = urllib.parse.urlparse(p_socket)
+    p_socket = urlparse(p_socket)
     if p_socket.scheme == "tcp":
       l_server.socket_host = p_socket.hostname
       l_port = p_socket.port

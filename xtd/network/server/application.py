@@ -9,22 +9,22 @@ import json
 import sys
 import cherrypy
 
+from xtd.core                 import logger, config
+from xtd.core.config          import checkers
+from xtd.core.application     import Application
+
 from .log                   import LogPage
 from .counter               import CounterPage
 from .config                import ConfigPage
 from .param                 import ParamPage
 from .manager               import ServerManager
 
-from xtd.core                 import logger, config
-from xtd.core.config          import checkers
-from xtd.core.application     import Application
-
 
 #------------------------------------------------------------------#
 
 class ServerApplication(Application):
   def __init__(self, p_name = sys.argv[0]):
-    super().__init__(p_name)
+    super(ServerApplication, self).__init__(p_name)
 
     self.config().register_section("http", "Server Settings", [{
       "name"        : "listen",
@@ -138,23 +138,22 @@ class ServerApplication(Application):
         config.set("http", c_key, checkers.is_file("http", c_key, l_val, p_read=True))
 
   def initialize(self):
-    super().initialize()
+    super(ServerApplication, self).initialize()
     self._check_config()
     self._initialize_server()
 
 
   def start(self):
-    super().start()
+    super(ServerApplication, self).start()
     ServerManager.start()
 
   def join(self):
     ServerManager.join()
-    super().join()
+    super(ServerApplication, self).join()
 
   def stop(self):
-    super().stop()
+    super(ServerApplication, self).stop()
     ServerManager.stop()
 
   def process(self):
     return 0, False
-

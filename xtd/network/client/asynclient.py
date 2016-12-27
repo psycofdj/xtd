@@ -5,9 +5,16 @@ __author__    = "Xavier MARCELET <xavier@marcelet.com>"
 
 #------------------------------------------------------------------#
 
+
+try:
+  from urlparse import urlunparse
+except ImportError:
+  from urllib.parse import urlunparse
+
 import json
-import urllib.parse
 import io
+
+# pylint: disable=import-error
 import pycurl
 
 from xtd.core       import logger
@@ -99,7 +106,7 @@ CURL_ERRORS = {
 
 #------------------------------------------------------------------#
 
-class HTTPRequest:
+class HTTPRequest(object):
   def __init__(self, p_url, p_method=None, p_headers=None, p_data=None, p_agent="xtd/pucyrl"):
     self.m_method  = self._guess_method(p_method, p_data)
     self.m_url     = p_url
@@ -123,10 +130,10 @@ class JsonHTTPRequest(HTTPRequest):
       p_headers = {}
     p_headers["Content-Type"] = "application/json; charset=utf-8"
     p_data = json.dumps(p_data)
-    super().__init__(p_url, p_method, p_headers, p_data, p_agent)
+    super(JsonHTTPRequest, self).__init__(p_url, p_method, p_headers, p_data, p_agent)
 
 
-class TCPResponse:
+class TCPResponse(object):
   def __init__(self):
     self.m_error = "uninitialized response"
 
@@ -135,7 +142,7 @@ class TCPResponse:
 
 class HTTPResponse(TCPResponse):
   def __init__(self, p_client):
-    super().__init__()
+    super(HTTPResponse, self).__init__()
     self.m_error       = p_client.m_handle.errstr()
     self.m_data        = None
     self.m_rawdata     = p_client.m_data.getvalue()
@@ -166,7 +173,7 @@ class HTTPResponse(TCPResponse):
 
 
 
-class AsyncCurlClient:
+class AsyncCurlClient(object):
   def __init__(self, p_request, p_timeoutMs = 1000, p_curlOpts=None):
     if isinstance(p_request, str):
       p_request = HTTPRequest(p_url=p_request)
@@ -262,7 +269,7 @@ class AsyncCurlClient:
 
   def _init_url(self):
     l_parsed, l_unix = url.parse_unix(self.m_request.m_url)
-    l_url            = urllib.parse.urlunparse(l_parsed)
+    l_url            = urlunparse(l_parsed)
     self.m_handle.setopt(pycurl.URL, l_url)
     if l_unix:
       # pylint: disable=no-member
@@ -309,7 +316,7 @@ class AsyncCurlClient:
   def close(self):
     self.m_handle.close()
 
-class AsyncCurlMultiClient:
+class AsyncCurlMultiClient(object):
   def __init__(self, p_timeoutMs=1000, p_curlMOpts=None):
     self.m_handle    = pycurl.CurlMulti()
     self.m_clients   = []
@@ -412,8 +419,11 @@ if __name__ == "__main__":
     l_req1 = l_multi.add_request("http://localhost:8889/")
     l_req2 = l_multi.add_request("http://www.google.fr/")
     l_res  = l_multi.send(p_retry=4)
+    #pylint: disable=superfluous-parens
     print(str(l_res))
+    #pylint: disable=superfluous-parens
     print(str(l_req1.response().m_error))
+    #pylint: disable=superfluous-parens
     print(str(l_req2.response().m_statusCode))
     l_multi.close()
   test()

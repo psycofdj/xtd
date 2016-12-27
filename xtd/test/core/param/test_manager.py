@@ -7,7 +7,7 @@ __author__    = "Xavier MARCELET <xavier@marcelet.com>"
 
 import logging
 import os
-import unittest
+import unittest2 as unittest
 
 from xtd.core.param import manager
 from xtd.core       import error
@@ -18,7 +18,7 @@ from xtd.core       import mixin
 # pylint: disable=protected-access
 class ParamTest(unittest.TestCase):
   def __init__(self, *p_args, **p_kwds):
-    super().__init__(*p_args, **p_kwds)
+    super(ParamTest, self).__init__(*p_args, **p_kwds)
 
   def setUp(self, p_name="name", p_value="value", p_listeners=None):
     self.m_obj = manager.Param(p_name, p_value, p_listeners)
@@ -58,7 +58,7 @@ class ParamTest(unittest.TestCase):
 # pylint: disable=protected-access
 class ConfigManagerTest(unittest.TestCase):
   def __init__(self, *p_args, **p_kwds):
-    super().__init__(*p_args, **p_kwds)
+    super(ConfigManagerTest, self).__init__(*p_args, **p_kwds)
     self.m_obj = None
 
   def setUp(self, p_path="/tmp/xtd_test_param_manager"):

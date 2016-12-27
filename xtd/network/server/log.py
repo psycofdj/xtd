@@ -13,7 +13,7 @@ from xtd.core import logger
 
 #------------------------------------------------------------------#
 
-class LogPage:
+class LogPage(object):
   def __init__(self, p_credentials = None):
     self.m_credentials = p_credentials
 

@@ -4,8 +4,11 @@
 __author__ = "Xavier MARCELET <xavier@marcelet.com>"
 
 #------------------------------------------------------------------#
+try:
+  from urlparse import urlparse
+except ImportError:
+  from urllib.parse import urlparse
 
-import urllib
 import json
 import os
 import re
@@ -16,7 +19,7 @@ from ..error import ConfigValueFileError, ConfigValueFileModeError
 from ..error import ConfigValueDirError, ConfigValueDirModeError
 from ..error import ConfigValueTypeError, ConfigValueLimitsError
 from ..error import ConfigValueEnumError, ConfigValueError
-from ..tools           import url
+from ..tools import url
 
 #------------------------------------------------------------------#
 
@@ -375,7 +378,7 @@ def check_socket(p_section, p_name, p_value, p_schemes=None, p_checkUnix=False):
   """
   if p_schemes is None:
     p_schemes = []
-  l_parts = urllib.parse.urlparse(p_value)
+  l_parts = urlparse(p_value)
   if len(p_schemes) and (not l_parts[0] in p_schemes):
     l_format = "invalid url '%s', scheme '%s' not in '%s'"
     l_message = l_format % (p_value, l_parts[0], str(p_schemes))

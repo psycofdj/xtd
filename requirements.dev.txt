@@ -1,9 +1,11 @@
 cherrypy
 termcolor
 pycurl
+requests
+unittest2
 httmock
 coveralls
 pylint
 sphinx
 sphinx_rtd_theme
-requests
+pytest

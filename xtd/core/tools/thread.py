@@ -14,7 +14,7 @@ from ..      import error
 
 class SafeThread(threading.Thread):
   def __init__(self, p_name, p_interval):
-    super().__init__(name=p_name)
+    super(SafeThread, self).__init__(name=p_name)
     self.m_name         = p_name
     self.m_terminated   = False
     self.m_loopInterval = p_interval
@@ -56,7 +56,7 @@ class SafeThread(threading.Thread):
 
 #-----------------------------------------------------------------------------#
 
-class SafeThreadGroup:
+class SafeThreadGroup(object):
   STATUS_STARTED = 1
   STATUS_STOPPED = 2
   STATUS_JOINED  = 3

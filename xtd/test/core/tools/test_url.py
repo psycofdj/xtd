@@ -5,7 +5,7 @@ __author__    = "Xavier MARCELET <xavier@marcelet.com>"
 
 #------------------------------------------------------------------#
 
-import unittest
+import unittest2 as unittest
 
 from xtd.core.tools  import url
 
@@ -14,7 +14,7 @@ from xtd.core.tools  import url
 
 class UrlTest(unittest.TestCase):
   def __init__(self, *p_args, **p_kwds):
-    super().__init__(*p_args, **p_kwds)
+    super(UrlTest, self).__init__(*p_args, **p_kwds)
 
   def test_parse_unix(self):
     l_parts, l_unix = url.parse_unix("http://localhost:80/path?param=1")

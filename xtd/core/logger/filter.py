@@ -9,13 +9,12 @@ import threading
 import logging
 import termcolor
 
-
 #------------------------------------------------------------------#
 
 class FieldFilter(logging.Filter):
 
   def __init__(self, fields=None):
-    super().__init__()
+    super(FieldFilter, self).__init__()
     self.m_lock   = threading.Lock()
     self.m_fields = fields
     if fields is None:

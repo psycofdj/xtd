@@ -22,7 +22,7 @@ from ..error import XtdError
 #------------------------------------------------------------------#
 
 
-class BaseCounter:
+class BaseCounter(object):
   """ Abstract base counter
 
   The almost-empty shell insure base methods are protected
@@ -80,7 +80,7 @@ class Value(BaseCounter):
 
   """
   def __init__(self, p_name, p_value = None, p_type='i'):
-    super().__init__(p_name)
+    super(Value, self).__init__(p_name)
     if p_value != None:
       self.m_unset = False
       self.m_value = multiprocessing.Value(p_type, p_value)
@@ -167,7 +167,7 @@ class Int32(Value):
   """:py:class:`multiprocessing.Value` type spec"""
 
   def __init__(self, p_name, p_value = None):
-    super().__init__(p_name, p_value, self.TYPE)
+    super(Int32, self).__init__(p_name, p_value, self.TYPE)
 
 class Int64(Value):
   """ Value specialization for signed 64 bits integer """
@@ -176,7 +176,7 @@ class Int64(Value):
   """:py:class:`multiprocessing.Value` type spec"""
 
   def __init__(self, p_name, p_value = None):
-    super().__init__(p_name, p_value, self.TYPE)
+    super(Int64, self).__init__(p_name, p_value, self.TYPE)
 
 class UInt32(Value):
   """ Value specialization for unsigned 32 bits integer """
@@ -185,7 +185,7 @@ class UInt32(Value):
   """:py:class:`multiprocessing.Value` type spec"""
 
   def __init__(self, p_name, p_value = None):
-    super().__init__(p_name, p_value, self.TYPE)
+    super(UInt32, self).__init__(p_name, p_value, self.TYPE)
 
 class UInt64(Value):
   """ Value specialization for unsigned 64 bits integer """
@@ -194,7 +194,7 @@ class UInt64(Value):
   """:py:class:`multiprocessing.Value` type spec"""
 
   def __init__(self, p_name, p_value = None):
-    super().__init__(p_name, p_value, self.TYPE)
+    super(UInt64, self).__init__(p_name, p_value, self.TYPE)
 
 class Float(Value):
   """ Value specialization for float """
@@ -203,7 +203,7 @@ class Float(Value):
   """:py:class:`multiprocessing.Value` type spec"""
 
   def __init__(self, p_name, p_value = None):
-    super().__init__(p_name, p_value, self.TYPE)
+    super(Float, self).__init__(p_name, p_value, self.TYPE)
 
 class Double(Value):
   """ Value specialization for double """
@@ -212,14 +212,14 @@ class Double(Value):
   """:py:class:`multiprocessing.Value` type spec"""
 
   def __init__(self, p_name, p_value = None):
-    super().__init__(p_name, p_value, self.TYPE)
+    super(Double, self).__init__(p_name, p_value, self.TYPE)
 
 #------------------------------------------------------------------#
 
 class Composed(BaseCounter):
   """ Manage a collection child counters """
   def __init__(self, p_name):
-    super().__init__(p_name)
+    super(Composed, self).__init__(p_name)
     self.m_childs = []
 
   def register(self, p_counter):
@@ -259,7 +259,7 @@ class TimedSample(Composed):
     p_type (str) : internal type representation, see :py:class:`multiprocessing.Value`
   """
   def __init__(self, p_name, p_timeMs = 10000, p_maxSamples = 20000, p_type = Int32.TYPE):
-    super().__init__(p_name)
+    super(TimedSample, self).__init__(p_name)
     self.m_samples  = []
     self.m_timeMs   = p_timeMs
     self.m_maxSize  = p_maxSamples
@@ -321,7 +321,7 @@ class Perf(TimedSample):
     Events beginnings and ends can't be interleaved in the same thread.
   """
   def __init__(self, p_name, p_timeMs = 10000, p_maxSamples = 20000):
-    super().__init__(p_name, p_timeMs, p_maxSamples, p_type=UInt64.TYPE)
+    super(Perf, self).__init__(p_name, p_timeMs, p_maxSamples, p_type=UInt64.TYPE)
     self.m_startTimes = {}
 
   def work_begin(self):
@@ -369,7 +369,7 @@ class CounterError(XtdError):
       "name" : p_name,
       "msg"  : p_msg.format(*p_args, **p_kwds)
     }
-    super().__init__(p_module, l_msg)
+    super(CounterError, self).__init__(p_module, l_msg)
 
 #------------------------------------------------------------------#
 

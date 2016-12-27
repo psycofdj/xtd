@@ -9,7 +9,7 @@ import sys
 import os
 import optparse
 import termcolor
-import unittest
+import unittest2 as unittest
 
 from xtd.core.logger import formatter
 
@@ -23,7 +23,7 @@ class Rec(object):
 
 class LocationFormatterTest(unittest.TestCase):
   def __init__(self, *p_args, **p_kwds):
-    super().__init__(*p_args, **p_kwds)
+    super(LocationFormatterTest, self).__init__(*p_args, **p_kwds)
 
   def makeRec(self, p_data = None):
     if p_data == None:

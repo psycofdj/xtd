@@ -10,7 +10,7 @@ from xtd.core import config
 
 #------------------------------------------------------------------#
 
-class ConfigPage:
+class ConfigPage(object):
   @cherrypy.expose
   @cherrypy.tools.json_out()
   #pylint: disable=unused-argument,no-self-use

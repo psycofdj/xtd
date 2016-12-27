@@ -9,7 +9,7 @@ import time
 import sys
 import os
 import termcolor
-import unittest
+import unittest2 as unittest
 
 from xtd.core.stat.counter import BaseCounter, Value, Int32, Int64
 from xtd.core.stat.counter import UInt32, UInt64, Float, Double
@@ -20,7 +20,7 @@ from xtd.core.stat.counter import Composed, TimedSample, Perf, CounterError
 
 class BaseCounterTest(unittest.TestCase):
   def __init__(self, *p_args, **p_kwds):
-    super().__init__(*p_args, **p_kwds)
+    super(BaseCounterTest, self).__init__(*p_args, **p_kwds)
 
   def test___init__(self):
     l_val = BaseCounter("toto")
@@ -49,7 +49,7 @@ class BaseCounterTest(unittest.TestCase):
 
 class ValueTest(unittest.TestCase):
   def __init__(self, *p_args, **p_kwds):
-    super().__init__(*p_args, **p_kwds)
+    super(ValueTest, self).__init__(*p_args, **p_kwds)
 
   def test___init__(self):
     l_val = Value("toto")
