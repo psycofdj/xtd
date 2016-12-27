@@ -34,8 +34,8 @@ dev-coverage::
 	@echo "--------"
 	@echo " Coverage "
 	@echo "--------"
-	@./devtools/coverage.sh 2> /dev/null
-	@coverage3 report
+	@./devtools/coverage.sh python
+	@python -m coverage report
 	@echo ""
 
 # report
@@ -46,8 +46,8 @@ report-coverage: build/coverage/index.html
 build/coverage/index.html: $(INPUT_SRC) $(INPUT_TEST) Makefile
 	@echo "generating coverage report ..."
 	@mkdir -p $(dir $@)
-	@./devtools/coverage.sh 2> /dev/null
-	@coverage3 html -d $(dir $@)
+	@./devtools/coverage.sh python 2> /dev/null
+	@python -m coverage html -d $(dir $@)
 	@echo "generating coverage report ... done"
 
 report-pylint: build/pylint/index.html

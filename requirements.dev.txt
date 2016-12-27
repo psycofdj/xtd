@@ -1,7 +1,3 @@
-cherrypy
-termcolor
-pycurl
-requests
 unittest2
 httmock
 coveralls

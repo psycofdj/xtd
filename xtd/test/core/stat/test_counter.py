@@ -248,7 +248,7 @@ class PerfTest(unittest.TestCase):
     with self.assertRaises(CounterError):
       l_obj.work_end()
     self.assertEqual(len(l_obj.m_samples), 1)
-    self.assertAlmostEqual(l_obj.m_samples[0][1], 100000, delta=500)
+    self.assertAlmostEqual(l_obj.m_samples[0][1], 100000, delta=15000)
 
 # Local Variables:
 # ispell-local-dictionary: "american"

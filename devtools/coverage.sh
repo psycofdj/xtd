@@ -1,7 +1,9 @@
 #!/bin/bash
 
+
 l_path=$(readlink -f $0)
 cd $(dirname $(dirname ${l_path}))
+l_interpreter=$1
 
 function join
 {
@@ -29,8 +31,8 @@ function get_source_dirs
 function gen_cov
 {
   rm -f .coverage
-  coverage run --source "$(get_source_dirs)" --omit "xtd/test/*" --branch ./devtools/unittests.py
+  $1 -m coverage run --source "$(get_source_dirs)" --omit "xtd/test/*" --branch ./devtools/unittests.py
 }
 
 
-gen_cov
+gen_cov ${l_interpreter}

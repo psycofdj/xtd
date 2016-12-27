@@ -4,13 +4,13 @@ cache:
   - pip
 
 install:
-  - sudo apt-get install graphviz debhelper python3-all python3-setuptools python3-pip python3-requests python3-cherrypy3 python3-termcolor
+  - sudo apt-get install graphviz debhelper python3-all python3-setuptools python3-pip python3-requests python3-cherrypy3 python3-termcolor devscripts
 
 script:
   - export PATH=/usr/bin:${PATH}
-  - sudo -H pip3 install -e .
-  - ./devtools/statuses.py --commit=${TRAVIS_COMMIT} --build-id=${TRAVIS_BUILD_ID} --token=${token} --pull-id=${TRAVIS_PULL_REQUEST}
-  - ./devtools/coverage.sh
+  - sudo -H pip3 install -rrequirements.txt -rrequirements.dev.txt --upgrade
+  - python3 ./devtools/statuses.py --commit=${TRAVIS_COMMIT} --build-id=${TRAVIS_BUILD_ID} --token=${token} --pull-id=${TRAVIS_PULL_REQUEST}
+  - ./devtools/coverage.sh python3
   - dpkg-buildpackage -uc -us
   - lintian ../python3-xtd_*_all.deb
 

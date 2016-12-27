@@ -1,7 +1,11 @@
 cherrypy
 termcolor
 requests
+future
+unittest2
+httmock
 coveralls
 pylint
 sphinx
 sphinx_rtd_theme
+pytest

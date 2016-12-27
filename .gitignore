@@ -72,3 +72,5 @@ debian/files
 debian/python-xtd.substvars
 debian/python-xtd/
 debian/python3-xtd*
+debian/python-xtd.postinst.debhelper
+debian/python-xtd.prerm.debhelper
