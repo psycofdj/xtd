@@ -1,4 +1,5 @@
 tar-ignore = ".git*"
+tar-ignore = ".tox*"
 tar-ignore = ".travis.yml"
 tar-ignore = "build*"
 tar-ignore = ".pybuild*"
