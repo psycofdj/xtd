@@ -12,10 +12,9 @@ xtdpy (0.6.0ppa2~trusty) trusty; urgency=medium
 
 xtdpy (0.5.7) unstable; urgency=medium
 
-  * fixes a bug in logging facility where record where modified
-    by multiple filters
+  * fixes a bug in logging facility where record where modified by multiple filters
 
- -- Xavier MARCELET <xavier@marcelet.com>  Wed, 21 Dec 2016 18:11:11 +0100
+ -- Xavier MARCELET <xavier.marcelet@orange.com>  Wed, 21 Dec 2016 18:11:11 +0100
 
 xtdpy (0.5.6) unstable; urgency=medium
 

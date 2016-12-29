@@ -9,3 +9,4 @@ pylint
 sphinx
 sphinx_rtd_theme
 pytest
+requests
