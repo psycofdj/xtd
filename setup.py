@@ -18,6 +18,7 @@ setup(
               'xtd.core.logger',     'xtd.core.config', 'xtd.network.client',
               'xtd.network.server'],
   install_requires = ["cherrypy", "termcolor", "pycurl", "requests"],
+  test_suite   = 'xtd.test',
   version      = xtd.__version__,
   description  = xtd.__description__,
   author       = xtd.__author__.split("<")[0].strip(),
