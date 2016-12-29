@@ -1,10 +1,10 @@
-xtdpy (0.6.0ppa2~xenial) xenial; urgency=medium
+xtdpy (0.6.0ppa3~xenial) xenial; urgency=medium
 
   * add python 2.7 compatibility
 
  -- Xavier MARCELET <xavier@marcelet.com>  Tue, 27 Dec 2016 19:53:50 +0100
 
-xtdpy (0.6.0ppa2~trusty) trusty; urgency=medium
+xtdpy (0.6.0ppa3~trusty) trusty; urgency=medium
 
   * add python 2.7 compatibility
 
