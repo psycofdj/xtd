@@ -1,15 +1,16 @@
 # -*- coding: utf-8
 #------------------------------------------------------------------#
+from __future__ import print_function
 
 __author__    = "Xavier MARCELET <xavier@marcelet.com>"
 
 #------------------------------------------------------------------#
 
-
 try:
   from urlparse import urlunparse
 except ImportError:
   from urllib.parse import urlunparse
+
 
 import json
 import io
@@ -419,11 +420,8 @@ if __name__ == "__main__":
     l_req1 = l_multi.add_request("http://localhost:8889/")
     l_req2 = l_multi.add_request("http://www.google.fr/")
     l_res  = l_multi.send(p_retry=4)
-    #pylint: disable=superfluous-parens
     print(str(l_res))
-    #pylint: disable=superfluous-parens
     print(str(l_req1.response().m_error))
-    #pylint: disable=superfluous-parens
     print(str(l_req2.response().m_statusCode))
     l_multi.close()
   test()

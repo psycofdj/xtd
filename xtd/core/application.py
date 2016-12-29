@@ -1,6 +1,7 @@
 # -*- coding: utf-8
 # pylint: disable=unused-import
 #------------------------------------------------------------------#
+from __future__   import print_function
 
 __author__    = "Xavier MARCELET <xavier@marcelet.com>"
 
@@ -218,12 +219,10 @@ class Application(with_metaclass(mixin.Singleton, object)):
     try:
       self.initialize()
     except ConfigError as l_error:
-      #pylint: disable=superfluous-parens
       print(l_error)
       self.m_config.help()
       sys.exit(1)
     except XtdError as l_error:
-      #pylint: disable=superfluous-parens
       print(l_error)
       sys.exit(1)
 
