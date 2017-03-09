@@ -10,6 +10,8 @@ import re
 import json
 import optparse
 import sys
+
+from future.builtins.misc import open as future_open
 from future.utils    import with_metaclass
 
 from .formatter        import IndentedHelpFormatterWithNL
@@ -388,7 +390,7 @@ class ConfigManager(with_metaclass(mixin.Singleton, object)):
       return
     l_fileName = self._validate("general", "config-file")
     try:
-      with open(l_fileName, mode="r", encoding="utf-8") as l_file:
+      with future_open(l_fileName, mode="r", encoding="utf-8") as l_file:
         l_lines = [ x for x in l_file.readlines() if not re.match(r"^\s*//.*" ,x) ]
         l_content = "\n".join(l_lines)
         l_data = json.loads(l_content)

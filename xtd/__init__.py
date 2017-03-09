@@ -247,7 +247,7 @@ Statistics
 
 __project__      = "xtd"
 __description__  = "High level library to quickly build strong python apps"
-__version__      = "0.6.0"
+__version__      = "0.6.1"
 __copyright__    = "GPL 3"
 __author__       = "Xavier MARCELET <xavier@marcelet.com>"
 __url__          = "https://github.com/psycofdj/xtdpy"
