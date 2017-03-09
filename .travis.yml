@@ -8,6 +8,7 @@ install:
 
 script:
   - export PATH=/usr/bin:${PATH}
+  - sudo -H pip3 install --upgrade pip
   - sudo -H pip3 install -rrequirements.txt -rrequirements.dev.txt --upgrade
   - python3 ./devtools/statuses.py --commit=${TRAVIS_COMMIT} --build-id=${TRAVIS_BUILD_ID} --token=${token} --pull-id=${TRAVIS_PULL_REQUEST}
   - ./devtools/coverage.sh python3
