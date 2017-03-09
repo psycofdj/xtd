@@ -1,3 +1,22 @@
+xtdpy (0.6.1ppa1~xenial) xenial; urgency=medium
+
+  * bugfix on python 2.7 compatibility
+
+ -- Xavier MARCELET <xavier@marcelet.com>  Thu, 09 Mar 2017 13:44:29 +0100
+
+xtdpy (0.6.1ppa1~trusty) xenial; urgency=medium
+
+  * bugfix on python 2.7 compatibility
+
+ -- Xavier MARCELET <xavier@marcelet.com>  Thu, 09 Mar 2017 13:44:29 +0100
+
+xtdpy (0.6.0ppa3~trusty) trusty; urgency=medium
+
+  * add python 2.7 compatibility
+
+ -- Xavier MARCELET <xavier@marcelet.com>  Tue, 27 Dec 2016 19:52:33 +0100
+
+
 xtdpy (0.6.0ppa3~xenial) xenial; urgency=medium
 
   * add python 2.7 compatibility
