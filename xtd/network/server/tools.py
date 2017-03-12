@@ -84,8 +84,12 @@ def log_request_response(p_withResponse):
 
   if not cherrypy.response.stream:
     try:
-      for c_chunk in cherrypy.response.body:
-        l_data["response"]["body"]["chunks"].append(enc(c_chunk))
+      # 1. do not consume read file_generator iterator
+      if type(cherrypy.response.body) == cherrypy.lib.file_generator:
+        l_data["response"]["body"]["chunks"] = []
+      else:
+        for c_chunk in range(len(cherrypy.response.body)):
+          l_data["response"]["body"]["chunks"].append(enc(cherrypy.response.body[c_chunk]))
     except BaseException:
       l_data["response"]["body"]["chunks"] = []
   return l_data

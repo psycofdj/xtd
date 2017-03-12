@@ -12,6 +12,7 @@ import cherrypy
 from xtd.core                 import logger, config
 from xtd.core.config          import checkers
 from xtd.core.application     import Application
+from xtd.core.tools           import daemonize
 
 from .log                   import LogPage
 from .counter               import CounterPage
@@ -39,11 +40,13 @@ class ServerApplication(Application):
     },{
       "name"        : "daemonize",
       "default"     : False,
-      "description" : "daemonize process at startup"
+      "description" : "daemonize process at startup",
+      "checks"      : checkers.is_bool()
     },{
       "name"        : "pid-file",
-      "default"     : "/tmp/%s.pid",
-      "description" : "daemon pid file"
+      "default"     : "/tmp/%(name)s.pid" % {"name" : self.m_name},
+      "description" : "daemon pid file",
+      "checks"      : checkers.is_file(p_write=True)
     },{
       "name"        : "admin-password",
       "default"     : None,
@@ -138,10 +141,14 @@ class ServerApplication(Application):
         config.set("http", c_key, checkers.is_file("http", c_key, l_val, p_read=True))
 
   def initialize(self):
-    super(ServerApplication, self).initialize()
+    self._initialize_config()
+    if config.get("http", "daemonize"):
+      daemonize.daemonize(config.get("http", "pid-file"))    
+    self._initialize_log()
+    self._initialize_stat()
+    self._initialize_param()
     self._check_config()
     self._initialize_server()
-
 
   def start(self):
     super(ServerApplication, self).start()
@@ -154,6 +161,7 @@ class ServerApplication(Application):
   def stop(self):
     super(ServerApplication, self).stop()
     ServerManager.stop()
-
+    
   def process(self):
     return 0, False
+
